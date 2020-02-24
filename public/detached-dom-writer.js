@@ -52,8 +52,8 @@ export class DetachedDomWriter {
    *
    */
   close() {
-    this.detachedDoc_.close();
     this.eof_ = true;
+    this.detachedDoc_.close();
     this.onEnd_(this.detachedDoc_);
   }
 }

@@ -16,6 +16,11 @@
 
   <!-- import the webpage's client-side javascript file -->
   <script src="/dom-streamer.js" type="module" defer></script>
+  <style>
+    input, button {
+      border: 1px solid slateblue;
+    }
+  </style>
 </head>
 
 <body>
@@ -29,7 +34,7 @@
   <input type="number" id="chunk" name="chunk" />
 
   <br />
-  <button>Start</button>
+  <button>(re)start</button>
 
   <p>config:</p>
   <div class="config"></div>

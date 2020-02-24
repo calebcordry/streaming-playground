@@ -12,20 +12,20 @@ const cspContent = `<!DOCTYPE html>
     <meta http-equiv=Content-Security-Policy content="
       img-src *;
       media-src *;
-      script-src 'none'; 
-      object-src 'none'; 
-      child-src 'none'; 
-      default-src 'none'; 
-      style-src  
-      https://cdn.ampproject.org/rtv/ 
-      https://cdn.materialdesignicons.com 
-      https://cloud.typography.com 
+      script-src 'none';
+      object-src 'none';
+      child-src 'none';
+      default-src 'none';
+      style-src
+      https://cdn.ampproject.org/rtv/
+      https://cdn.materialdesignicons.com
+      https://cloud.typography.com
       https://fast.fonts.net
-      https://fonts.googleapis.com 
-      https://maxcdn.bootstrapcdn.com 
-      https://p.typekit.net 
-      https://pro.fontawesome.com 
-      https://use.fontawesome.com 
+      https://fonts.googleapis.com
+      https://maxcdn.bootstrapcdn.com
+      https://p.typekit.net
+      https://pro.fontawesome.com
+      https://use.fontawesome.com
       https://use.typekit.net
       'unsafe-inline';
   ">

@@ -14,8 +14,9 @@ export class StreamHandler {
     this.shouldTransfer_ = false;
     this.mergeScheduled_ = false;
 
+    // Fake vsync for glitch demo.
+    // TODO: switch to real vsync service.
     /** @const @private */
-    // Fake vsync for demo.
     this.vsync_ = { mutate: cb => Promise.resolve(cb()) };
   }
 
@@ -35,9 +36,9 @@ export class StreamHandler {
   }
 
   /**
-   * @param {!Document} completedDoc
+   * @param {!Document} unusedCompleteDoc
    */
-  onEnd(completedDoc) {
+  onEnd(unusedCompleteDoc) {
     console.log('stream done.');
   }
 
@@ -49,20 +50,25 @@ export class StreamHandler {
   }
 
   /**
-   * @param {!Element} target
+   * Start the body transfer process. Should only be called once.
+   * Returns a promise indicating that the first body chunk has been transfered.
+   * @param {!Element} target DOM element to be appended to.
    * @return {!Promise} resolves when first chunk has been transfered.
-   * More chunks could still be coming later.
    */
   transferBody(target) {
-    // After the first call, immediately resolve.
+    if (!target) {
+      // Throw on no target given.
+    }
+
     if (this.shouldTransfer_) {
+      // Maybe throw on subsequent calls?
       return Promise.resolve();
     }
-    // TODO: throw on no target.
+
     this.shouldTransfer_ = true;
     this.target_ = target;
 
-    return this.transferBody_();
+    return this.headPromise_.then(() => this.transferBody_());
   }
 
   /**

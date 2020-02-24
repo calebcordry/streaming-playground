@@ -1,5 +1,5 @@
 const express = require('express');
-
+const fs = require('fs');
 const { IS_DEV } = require('./utils/dev');
 const app = express();
 
@@ -16,9 +16,36 @@ app.get('/dom-streamer', (request, response) => {
   response.sendFile(__dirname + '/views/dom-streamer.html');
 });
 
+const CHUNK_SIZE = 256;
+
 app.get('/stream', (request, response) => {
-  debugger;
-  response.sendFile(__dirname + '/views/response.html');
+  const { chunkSpeed } = request.query;
+  const responsePath = __dirname + '/views/response.html';
+  if (!chunkSpeed) {
+    return response.sendFile(responsePath);
+  }
+
+  response.writeHead(200, { 'Content-Type': 'text/html' });
+
+  const chunks = [];
+
+  fs.createReadStream(responsePath, {
+    highWaterMark: CHUNK_SIZE,
+    encoding: 'utf8',
+  })
+    .on('data', chunk => {
+      chunks.push(chunk);
+    })
+    .on('close', () => {
+      for (let i = 0; i < chunks.length; i++) {
+        setTimeout(() => {
+          response.write(chunks[i]);
+          if (i === chunks.length - 1) {
+            response.end();
+          }
+        }, i * chunkSpeed);
+      }
+    });
 });
 
 const PORT = IS_DEV ? 3000 : process.env.PORT;
