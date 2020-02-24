@@ -17,7 +17,8 @@ app.get('/dom-streamer', (request, response) => {
 });
 
 app.get('/stream', (request, response) => {
-  response.sendFile(__dirname + '/views/index.html');
+  debugger;
+  response.sendFile(__dirname + '/views/response.html');
 });
 
 const PORT = IS_DEV ? 3000 : process.env.PORT;
