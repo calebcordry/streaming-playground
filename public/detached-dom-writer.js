@@ -17,14 +17,14 @@
 export class DetachedDomWriter {
   /**
    * @param {!Window} win
-   * @param {function():void} onChunk
-   * @param {function():void} onEnd
+   * @param {function(!Document):void} onChunk
+   * @param {function(!Document):void} onEnd
    */
   constructor(win, onChunk, onEnd) {
-    /** */
+    /** @const @private {function(!Document):void} */
     this.onChunk_ = onChunk;
 
-    /** */
+    /** @const @private {function(!Document):void} */
     this.onEnd_ = onEnd;
 
     /** @const @private {!Document} */
@@ -36,6 +36,8 @@ export class DetachedDomWriter {
   }
 
   /**
+   * Write chunk into detached doc, and call given chunk cb.
+   * @public
    * @param {string} chunk
    */
   write(chunk) {
@@ -49,7 +51,8 @@ export class DetachedDomWriter {
   }
 
   /**
-   *
+   * Called when stream is finished. Close the detached doc, and call cb.
+   * @public
    */
   close() {
     this.eof_ = true;
